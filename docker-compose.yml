@@ -11,6 +11,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   redis:
     driver: ${VOLUMES_DRIVER}
+  sentry:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -150,14 +152,15 @@ services:
       - SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY}
       - SENTRY_REDIS_HOST=redis
       - SENTRY_POSTGRES_HOST=postgres
-      - SENTRY_POSTGRES_PORT=${POSTGRES_PORT}
       - SENTRY_DB_USER=${POSTGRES_USER}
       - SENTRY_DB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ${DATA_PATH_HOST}/sentry:/var/lib/sentry/files
     networks:
       - backend
       - frontend
 
-  sentry_celery_beat:
+  sentry_beat:
     image: sentry:latest
     depends_on:
       - redis
@@ -167,14 +170,13 @@ services:
       - SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY}
       - SENTRY_REDIS_HOST=redis
       - SENTRY_POSTGRES_HOST=postgres
-      - SENTRY_POSTGRES_PORT=${POSTGRES_PORT}
       - SENTRY_DB_USER=${POSTGRES_USER}
       - SENTRY_DB_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - backend
       - frontend
 
-  sentry_celery_worker:
+  sentry_worker:
     image: sentry:latest
     depends_on:
       - redis
@@ -184,7 +186,6 @@ services:
       - SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY}
       - SENTRY_REDIS_HOST=redis
       - SENTRY_POSTGRES_HOST=postgres
-      - SENTRY_POSTGRES_PORT=${POSTGRES_PORT}
       - SENTRY_DB_USER=${POSTGRES_USER}
       - SENTRY_DB_PASSWORD=${POSTGRES_PASSWORD}
     networks:

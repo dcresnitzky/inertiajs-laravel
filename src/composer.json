@@ -15,7 +15,9 @@
         "inertiajs/inertia-laravel": "^0.2.8",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.2"
+        "laravel/ui": "^2.2",
+        "sentry/sentry-laravel": "^1.8",
+        "tightenco/ziggy": "^0.9.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
