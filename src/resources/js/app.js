@@ -25,8 +25,26 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import {InertiaApp} from "@inertiajs/inertia-vue";
+import { Ziggy } from './ziggy';
+import route from "ziggy-js";
+import * as Sentry from "@sentry/browser";
+import { Vue as VueIntegration } from "@sentry/integrations";
+
+Sentry.init({
+    dsn: "http://15d69aad346c49f081b19597e10acb87@localhost:9080/3'",
+    integrations: [new VueIntegration({ Vue, attachProps: true })],
+    attachProps: true,
+    debug: true,
+    logErrors: true
+});
 
 Vue.use(InertiaApp)
+
+Vue.mixin({
+    methods: {
+        route: (name, params, absolute) => route(name, params, absolute, Ziggy),
+    },
+});
 
 const app = document.getElementById('app')
 

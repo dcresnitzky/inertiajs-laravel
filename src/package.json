@@ -26,6 +26,9 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.2.1",
         "@inertiajs/inertia-vue": "^0.2.1",
-        "friendly-errors-webpack-plugin": "npm:@soda/friendly-errors-webpack-plugin@^1.7.1"
+        "@sentry/browser": "^5.22.3",
+        "@sentry/integrations": "^5.22.3",
+        "friendly-errors-webpack-plugin": "npm:@soda/friendly-errors-webpack-plugin@^1.7.1",
+        "ziggy-js": "^0.9.4"
     }
 }
