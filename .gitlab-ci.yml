@@ -1,0 +1,7 @@
+stages:
+  - tests
+  - deploy
+
+include:
+  - '/gitlab/tests.yml'
+  - '/gitlab/deploy.yml'

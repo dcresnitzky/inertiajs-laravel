@@ -1,0 +1,4 @@
+/.idea
+/.laradock
+.env
+.php_cs.cache
