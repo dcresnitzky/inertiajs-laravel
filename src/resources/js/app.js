@@ -16,7 +16,7 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-const files = require.context('./components/', true, /\.vue$/i)
+const files = require.context('./Components/', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 /**
@@ -52,7 +52,7 @@ new Vue({
     render: h => h(InertiaApp, {
         props: {
             initialPage: JSON.parse(app.dataset.page),
-            resolveComponent: name => require(`./pages/${name}`).default,
+            resolveComponent: name => require(`./Pages/${name}`).default,
         },
     }),
 }).$mount(app)

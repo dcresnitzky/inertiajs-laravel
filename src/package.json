@@ -11,9 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.19",
-        "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
-        "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
         "popper.js": "^1.12",
@@ -21,14 +19,14 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
-    },
-    "dependencies": {
+        "vue-template-compiler": "^2.6.10",
         "@inertiajs/inertia": "^0.2.1",
         "@inertiajs/inertia-vue": "^0.2.1",
         "@sentry/browser": "^5.22.3",
         "@sentry/integrations": "^5.22.3",
         "friendly-errors-webpack-plugin": "npm:@soda/friendly-errors-webpack-plugin@^1.7.1",
+        "tailwindcss": "^1.8.6",
+        "@tailwindcss/ui": "^0.6.0",
         "ziggy-js": "^0.9.4"
     }
 }
