@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet"></link>
     <link href="{{ mix('/css/nprogress.css') }}" rel="stylesheet"></link>
-{{--    <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet"></link>--}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </head>
     <body>

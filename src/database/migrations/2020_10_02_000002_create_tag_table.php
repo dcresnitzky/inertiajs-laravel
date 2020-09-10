@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJobPositionTable extends Migration
+class CreateTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateJobPositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_position', function (Blueprint $table) {
+        Schema::create('tag', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('location');
-            $table->string('type');
-            $table->string('short_description');
-            $table->text('description');
-            $table->timestamps();
+            $table->integer('job_position_id');
+
+            $table->foreign('job_position_id')
+                ->on('job_position')
+                ->references('id');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateJobPositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_position');
+        Schema::dropIfExists('tag');
     }
 }

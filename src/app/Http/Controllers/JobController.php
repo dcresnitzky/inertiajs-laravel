@@ -5,16 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\FormRequests\ApplicationRequest;
 use App\JobApplication;
 use App\JobPosition;
+use App\Tag;
+use DB;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+//        sleep(3);
         return Inertia::render('Home', [
-            'jobs' => JobPosition::orderBy('title')
+            'jobs' => JobPosition::with('tags')
+                ->orderBy('title')
+                ->when($request->has('query'), fn($query) =>
+                    $query->where(DB::raw('LOWER(title)'), 'like', "%{$request->get('query')}%"))
                 ->get(),
+
+            'tags' => Tag::query()
+                ->select(['title', DB::raw('count(*) as total')])
+                ->groupBy('title')
+                ->orderBy('total', 'desc')
+                ->pluck('title')
         ]);
     }
 
@@ -27,7 +40,7 @@ class JobController extends Controller
 
     public function apply(ApplicationRequest $request)
     {
-        sleep(3);
+//        sleep(3);
         $path = $request->attachment->store('');
 
         JobApplication::create(array_merge($request->all(), [

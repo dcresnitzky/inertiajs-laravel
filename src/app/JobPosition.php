@@ -27,17 +27,30 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $location
+ * @property string $type
+ * @property string $short_description
+ * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereShortDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobPosition whereType($value)
  */
 class JobPosition extends Model
 {
     protected $table = 'job_position';
 
     protected $fillable = [
-        'title', 'location', 'desciption', 'short_description', 'tags', 'type'
+        'title', 'location', 'desciption', 'short_description', 'type'
     ];
 
     public function applications()
     {
         return $this->hasMany(JobApplication::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
     }
 }

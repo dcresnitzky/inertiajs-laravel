@@ -17,7 +17,7 @@
                 </label>
                 <input v-model="form.email"
                        class="text-sm appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                       type="text" placeholder="Seu nome..." id="grid-email">
+                       type="text" placeholder="Seu email..." id="grid-email">
                 <p v-if="$page.errors.email" class="text-red-500 text-xs italic">{{ $page.errors.email[0] }}</p>
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -26,7 +26,7 @@
                 </label>
                 <input v-model="form.phone"
                        class="text-sm appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                       type="text" placeholder="Seu nome..." id="grid-phone">
+                       type="text" placeholder="Seu telefone com ddd..." id="grid-phone">
                 <p v-if="$page.errors.phone" class="text-red-500 text-xs italic">{{ $page.errors.phone[0] }}</p>
             </div>
             <div class="w-full md:w-full px-3 mb-6">
@@ -67,10 +67,10 @@ export default {
         return {
             sending: false,
             form: {
-                name: null,
-                email: null,
-                phone: null,
-                attachment: null,
+                name: '',
+                email: '',
+                phone: '',
+                attachment: '',
                 job_position_id: this.job.id
             }
         }
@@ -86,9 +86,9 @@ export default {
             formData.append('attachment', this.form.attachment || '')
             formData.append('job_position_id', this.form.job_position_id || '')
 
-
             try {
                 this.sending = true;
+
                 await this.$inertia.post(this.route('apply'), formData, {
                     replace: false,
                     preserveState: true,
@@ -96,20 +96,22 @@ export default {
                     only: [],
                     headers: {},
                 })
+
                 this.$toasted.show('Você se candidatou, aguarde novidades!')
                 this.reset()
 
             } catch(error) {
+                console.log(error);
                 this.$toasted.show('Ops, ocorreu um erro ao tentar candidatar-se')
             }
             this.sending = false;
         },
 
         reset: function () {
-            this.$page.errors = null;
-            this.form.name = null
-            this.form.phone = null
-            this.form.email = null
+            this.$page.errors = '';
+            this.form.name = ''
+            this.form.phone = ''
+            this.form.email = ''
             this.$refs.attachmentRef.value = null;
         },
 

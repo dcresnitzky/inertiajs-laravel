@@ -11086,10 +11086,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       sending: false,
       form: {
-        name: null,
-        email: null,
-        phone: null,
-        attachment: null,
+        name: '',
+        email: '',
+        phone: '',
+        attachment: '',
         job_position_id: this.job.id
       }
     };
@@ -11122,18 +11122,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 10:
                 this.$toasted.show('Você se candidatou, aguarde novidades!');
                 this.reset();
-                _context.next = 17;
+                _context.next = 18;
                 break;
 
               case 14:
                 _context.prev = 14;
                 _context.t0 = _context["catch"](6);
+                console.log(_context.t0);
                 this.$toasted.show('Ops, ocorreu um erro ao tentar candidatar-se');
 
-              case 17:
+              case 18:
                 this.sending = false;
 
-              case 18:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -11148,10 +11149,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return send;
     }(),
     reset: function reset() {
-      this.$page.errors = null;
-      this.form.name = null;
-      this.form.phone = null;
-      this.form.email = null;
+      this.$page.errors = '';
+      this.form.name = '';
+      this.form.phone = '';
+      this.form.email = '';
       this.$refs.attachmentRef.value = null;
     },
     handleFileUpload: function handleFileUpload() {
@@ -11221,12 +11222,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: _Layout__WEBPACK_IMPORTED_MODULE_0__["default"],
   props: {
-    jobs: Array
+    jobs: Array,
+    tags: Array
   },
   components: {
     JobCard: _Components_JobCard__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -11251,9 +11264,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Layout */ "./resources/js/Pages/Layout.vue");
 /* harmony import */ var _Components_JobApplication__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/JobApplication */ "./resources/js/Components/JobApplication.vue");
-//
-//
-//
 //
 //
 //
@@ -11325,7 +11335,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      query: ''
+    };
+  },
+  methods: {
+    search: function search() {
+      return this.$inertia.visit(this.route('home'), {
+        data: {
+          query: this.query.toLowerCase() || null
+        },
+        only: ['jobs']
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -54565,7 +54602,7 @@ var render = function() {
               "text-sm appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
             attrs: {
               type: "text",
-              placeholder: "Seu nome...",
+              placeholder: "Seu email...",
               id: "grid-email"
             },
             domProps: { value: _vm.form.email },
@@ -54610,7 +54647,7 @@ var render = function() {
               "text-sm appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
             attrs: {
               type: "text",
-              placeholder: "Seu nome...",
+              placeholder: "Seu telefone com ddd...",
               id: "grid-phone"
             },
             domProps: { value: _vm.form.phone },
@@ -54731,79 +54768,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-1/5 text-gray-700 px-4 py-2 m-2" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "border-r border-b border-l border-t border-gray-400 lg:border-l lg:border-t lg:border-gray-300 bg-white rounded p-5 leading-normal"
-      },
-      [
-        _c("div", { staticClass: "mb-5" }, [
-          _c("div", { staticClass: "text-gray-900 font-bold text-xl mb-2" }, [
-            _vm._v(_vm._s(_vm.job.title))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-gray-700 text-base" }, [
-            _vm._v(_vm._s(_vm.job.short_description))
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "mb-3" },
-          [
-            _c(
-              "inertia-link",
-              { attrs: { href: _vm.route("show", { id: _vm.job.id }) } },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "rounded-full pointer inline-block bg-primary text-white px-4 py-1 font-semibold hover:text-gray-100"
-                  },
-                  [_vm._v("Saiba mais")]
-                )
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex items-center" }, [
-          _c("div", { staticClass: "text-sm" }, [
-            _c("p", { staticClass: "text-gray-900 leading-none" }, [
-              _vm._v(_vm._s(_vm.job.type))
+  return _c(
+    "div",
+    { staticClass: "w-1/5 text-gray-700 px-4 py-2 m-2 h-auto" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "border-r border-b border-l border-t border-gray-400 lg:border-l lg:border-t lg:border-gray-300 bg-white rounded p-5 leading-normal"
+        },
+        [
+          _c("div", { staticClass: "mb-5" }, [
+            _c("div", { staticClass: "text-gray-900 font-bold text-xl mb-2" }, [
+              _vm._v(_vm._s(_vm.job.title))
             ]),
             _vm._v(" "),
-            _c("p", { staticClass: "text-gray-600" }, [
-              _vm._v(
-                "Postado em: " +
-                  _vm._s(_vm._f("formatDate")(_vm.job.created_at))
-              )
+            _c("p", { staticClass: "text-gray-700 text-base" }, [
+              _vm._v(_vm._s(_vm.job.short_description))
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "px-0 pt-1 pb-1 mt-2" },
-          _vm._l(JSON.parse(_vm.job.tags), function(tag) {
-            return _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2"
-              },
-              [_vm._v("#" + _vm._s(tag))]
-            )
-          }),
-          0
-        )
-      ]
-    )
-  ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "mb-3" },
+            [
+              _c(
+                "inertia-link",
+                { attrs: { href: _vm.route("show", { id: _vm.job.id }) } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "rounded-full pointer inline-block bg-primary text-white px-4 py-1 font-semibold hover:text-gray-100"
+                    },
+                    [_vm._v("Saiba mais")]
+                  )
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex items-center" }, [
+            _c("div", { staticClass: "text-sm" }, [
+              _c("p", { staticClass: "text-gray-900 leading-none" }, [
+                _vm._v(_vm._s(_vm.job.type))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-gray-600" }, [
+                _vm._v(
+                  "Postado em: " +
+                    _vm._s(_vm._f("formatDate")(_vm.job.created_at))
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "px-0 pt-1 pb-1 mt-2" },
+            _vm._l(_vm.job.tags, function(tag) {
+              return _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2"
+                },
+                [_vm._v("#" + _vm._s(tag.title))]
+              )
+            }),
+            0
+          )
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54829,14 +54870,41 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "overflow-y-auto flex mb-4",
-      attrs: { "scroll-region": "" }
-    },
-    _vm._l(_vm.jobs, function(job) {
-      return _c("job-card", { key: job.id, attrs: { job: job } })
-    }),
-    1
+    { staticClass: "flex flex-wrap px-20 py-10 justify-center" },
+    [
+      _c("div", { staticClass: "w-full" }, [
+        _c(
+          "div",
+          { staticClass: "py-2  px-10" },
+          [
+            _c("span", { staticClass: "inline-block" }, [
+              _vm._v("Filtrar por tags:")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.tags, function(tag) {
+              return _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2"
+                },
+                [_vm._v("\n                #" + _vm._s(tag) + "\n            ")]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-full flex flex-wrap justify-center" },
+        _vm._l(_vm.jobs, function(job) {
+          return _c("job-card", { key: job.id, attrs: { job: job } })
+        }),
+        1
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -54861,48 +54929,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "h-screen overflow-hidden flex" }, [
+  return _c("div", { staticClass: "flex flex-wrap px-20 py-10" }, [
+    _c("div", { staticClass: "w-7/12", attrs: { "scroll-region": "" } }, [
+      _c("div", { staticClass: "mb-3" }, [
+        _c("h1", [_vm._v(_vm._s(_vm.job.title))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex items-center mb-5" }, [
+        _c("div", { staticClass: "text-sm" }, [
+          _c("p", { staticClass: "text-gray-900 leading-none" }, [
+            _vm._v(_vm._s(_vm.job.type))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-gray-600" }, [
+            _vm._v(
+              "Postado em: " + _vm._s(_vm._f("formatDate")(_vm.job.created_at))
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "description",
+        domProps: { innerHTML: _vm._s(_vm.job.description) }
+      })
+    ]),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "w-4/12 px-10 pt-10" },
+      { staticClass: "w-4/12 fixed right-0 " },
       [_c("job-application", { attrs: { job: _vm.job } })],
       1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex-1 flex overflow-hidden" }, [
-      _c(
-        "div",
-        {
-          staticClass: "flex-1 overflow-y-scroll px-10 pt-10",
-          attrs: { "scroll-region": "" }
-        },
-        [
-          _c("div", { staticClass: "mb-3" }, [
-            _c("h1", [_vm._v(_vm._s(_vm.job.title))])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex items-center mb-5" }, [
-            _c("div", { staticClass: "text-sm" }, [
-              _c("p", { staticClass: "text-gray-900 leading-none" }, [
-                _vm._v(_vm._s(_vm.job.type))
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-gray-600" }, [
-                _vm._v(
-                  "Postado em: " +
-                    _vm._s(_vm._f("formatDate")(_vm.job.created_at))
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "description",
-            domProps: { innerHTML: _vm._s(_vm.job.description) }
-          })
-        ]
-      )
-    ])
+    )
   ])
 }
 var staticRenderFns = []
@@ -54927,46 +54985,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "h-screen overflow-hidden" }, [
-    _c(
-      "nav",
-      {
-        staticClass:
-          "flex items-center justify-between flex-wrap bg-primary p-6"
-      },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "w-full block flex-grow lg:flex lg:items-center lg:w-auto"
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "text-md lg:flex-grow" },
-              [
+  return _c(
+    "main",
+    { staticClass: "w-full overflow-y-auto" },
+    [
+      _c(
+        "nav",
+        {
+          staticClass:
+            "fixed flex items-center justify-between bg-primary py-6 px-20 w-full"
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex items-center flex-shrink-0 text-white mr-6 text-xl"
+            },
+            [
+              _c("i", { staticClass: "material-icons mr-2" }, [
+                _vm._v("assignment_ind")
+              ]),
+              _vm._v(" "),
+              _c(
+                "inertia-link",
+                {
+                  staticClass:
+                    "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4",
+                  attrs: { href: _vm.route("home") }
+                },
+                [
+                  _c("span", { staticClass: "font-semibold tracking-tight" }, [
+                    _vm._v("Trablahe Conosco")
+                  ])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "w-full block flex-grow lg:flex lg:items-center lg:w-auto"
+            },
+            [
+              _c("div", { staticClass: "text-md w-4/12 ml-5" }, [
                 _c(
-                  "inertia-link",
+                  "div",
                   {
                     staticClass:
-                      "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4",
-                    attrs: { href: _vm.route("home") }
+                      "flex items-center py-0 bg-gray-200 rounded-full px-3"
                   },
-                  [_vm._v("\n                    Vagas\n                ")]
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: " text-gray-500 text-sm",
+                        attrs: { for: "search" }
+                      },
+                      [_vm._v("Buscar:")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.query,
+                          expression: "query"
+                        }
+                      ],
+                      staticClass:
+                        "appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight text-sm focus:outline-none focus:bg-transparent",
+                      attrs: {
+                        id: "search",
+                        type: "text",
+                        placeholder: "Nome da vaga..."
+                      },
+                      domProps: { value: _vm.query },
+                      on: {
+                        keyup: _vm.search,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.query = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]
                 )
-              ],
-              1
-            )
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c("article", [_vm._t("default")], 2)
-  ])
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "block my-6" }, [_vm._v("&bnsp")]),
+      _vm._v(" "),
+      _vm._t("default")
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -54974,11 +55098,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticClass: "flex items-center flex-shrink-0 text-white mr-6" },
+      "span",
+      { staticClass: "no-appearance pt-2 focus:outline-none" },
       [
-        _c("span", { staticClass: "font-semibold text-xl tracking-tight" }, [
-          _vm._v("Trablahe Conosco")
+        _c("i", { staticClass: "material-icons text-gray-500" }, [
+          _vm._v("search")
         ])
       ]
     )
