@@ -11233,6 +11233,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11243,6 +11245,44 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     JobCard: _Components_JobCard__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mounted: function mounted() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var tags = urlParams.getAll('tags[]') || [];
+    this.selectionTags = this.tags.map(function (tag) {
+      return {
+        title: tag,
+        selected: tags.includes(tag)
+      };
+    });
+  },
+  data: function data() {
+    return {
+      selectionTags: []
+    };
+  },
+  methods: {
+    toggleTag: function toggleTag(tag) {
+      tag.selected = !tag.selected;
+      this.$inertia.replace(this.route('home'), {
+        data: {
+          query: this.$parent.query.toLowerCase() || null,
+          tags: this.selectedTags.map(function (tag) {
+            return tag.title;
+          }) || null
+        },
+        only: ['jobs'],
+        replace: true,
+        preserveScroll: true
+      });
+    }
+  },
+  computed: {
+    selectedTags: function selectedTags() {
+      return this.selectionTags.filter(function (tag) {
+        return tag.selected;
+      });
+    }
   },
   metaInfo: function metaInfo() {
     return {
@@ -11354,7 +11394,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     search: function search() {
-      return this.$inertia.visit(this.route('home'), {
+      this.$inertia.visit(this.route('home'), {
         data: {
           query: this.query.toLowerCase() || null
         },
@@ -54881,14 +54921,24 @@ var render = function() {
               _vm._v("Filtrar por tags:")
             ]),
             _vm._v(" "),
-            _vm._l(_vm.tags, function(tag) {
+            _vm._l(_vm.selectionTags, function(tag) {
               return _c(
-                "span",
+                "button",
                 {
                   staticClass:
-                    "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2"
+                    "pointer inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2 hover:text-grey-500 focus:outline-none",
+                  class: { "bg-primary": tag.selected },
+                  on: {
+                    click: function($event) {
+                      return _vm.toggleTag(tag)
+                    }
+                  }
                 },
-                [_vm._v("\n                #" + _vm._s(tag) + "\n            ")]
+                [
+                  _vm._v(
+                    "\n                #" + _vm._s(tag.title) + "\n            "
+                  )
+                ]
               )
             })
           ],

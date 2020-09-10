@@ -40,7 +40,7 @@ export default {
 
     methods: {
         search: function() {
-            return this.$inertia.visit(this.route('home'), {
+            this.$inertia.visit(this.route('home'), {
                 data: {
                     query: this.query.toLowerCase() || null
                 },

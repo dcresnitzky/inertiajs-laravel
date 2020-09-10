@@ -15,13 +15,20 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-//        sleep(3);
         return Inertia::render('Home', [
+
             'jobs' => JobPosition::with('tags')
-                ->orderBy('title')
-                ->when($request->has('query'), fn($query) =>
-                    $query->where(DB::raw('LOWER(title)'), 'like', "%{$request->get('query')}%"))
-                ->get(),
+                ->from('job_position as jp')
+                ->join('tag as t', 'jp.id', '=', 't.job_position_id')
+                ->orderBy('jp.title')
+                ->when($request->has('query'), fn($query) => $query->where(DB::raw('LOWER(jp.title)'), 'like', "%{$request->get('query')}%"))
+                ->when($request->has('tags'), fn($query) => $query->whereIn('t.title', $request->get('tags')))
+                ->groupBy([
+                    'jp.id', 'jp.title', 'jp.short_description', 'jp.location', 'jp.type', 'jp.created_at'
+                ])
+                ->get([
+                    'jp.id', 'jp.title', 'jp.short_description', 'jp.location', 'jp.type', 'jp.created_at'
+                ]),
 
             'tags' => Tag::query()
                 ->select(['title', DB::raw('count(*) as total')])
@@ -40,7 +47,6 @@ class JobController extends Controller
 
     public function apply(ApplicationRequest $request)
     {
-//        sleep(3);
         $path = $request->attachment->store('');
 
         JobApplication::create(array_merge($request->all(), [
@@ -51,4 +57,5 @@ class JobController extends Controller
             'id' => $request->job_position_id
         ]);
     }
+
 }
