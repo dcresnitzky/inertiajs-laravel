@@ -1,9 +1,9 @@
     var Ziggy = {
-        namedRoutes: {"home":{"uri":"home","methods":["GET","HEAD"],"domain":null}},
-        baseUrl: 'http://localhost/',
+        namedRoutes: {"home":{"uri":"\/","methods":["GET","HEAD"],"domain":null},"show":{"uri":"{id}","methods":["GET","HEAD"],"domain":null},"apply":{"uri":"apply","methods":["POST"],"domain":null}},
+        baseUrl: 'http://localhost:9090/',
         baseProtocol: 'http',
         baseDomain: 'localhost',
-        basePort: false,
+        basePort: 9090,
         defaultParameters: []
     };
 

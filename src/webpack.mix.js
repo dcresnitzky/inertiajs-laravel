@@ -26,3 +26,5 @@ mix.js('resources/js/app.js', 'public/js')
             tailwindcss('./tailwind.config.js')
         ],
     })
+
+mix.styles('resources/sass/nprogress.css', 'public/css/nprogress.css')

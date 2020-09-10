@@ -25,19 +25,24 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import {InertiaApp} from "@inertiajs/inertia-vue";
-import { Ziggy } from './ziggy';
+import {Ziggy} from './ziggy';
 import route from "ziggy-js";
 import * as Sentry from "@sentry/browser";
-import { Vue as VueIntegration } from "@sentry/integrations";
+import {Vue as VueIntegration} from "@sentry/integrations";
+import VueMeta from 'vue-meta'
+import moment from "moment";
+import Toasted from 'vue-toasted';
 
 Sentry.init({
     dsn: "http://15d69aad346c49f081b19597e10acb87@localhost:9080/3'",
-    integrations: [new VueIntegration({ Vue, attachProps: true })],
+    integrations: [new VueIntegration({Vue, attachProps: true})],
     attachProps: true,
     debug: true,
     logErrors: true
 });
 
+Vue.use(Toasted)
+Vue.use(VueMeta)
 Vue.use(InertiaApp)
 
 Vue.mixin({
@@ -47,6 +52,12 @@ Vue.mixin({
 });
 
 const app = document.getElementById('app')
+
+Vue.filter('formatDate', function (value) {
+    if (value) {
+        return moment(String(value)).format('MM/DD/YYYY') + ' as ' + moment(String(value)).format('hh:ss')
+    }
+});
 
 new Vue({
     render: h => h(InertiaApp, {

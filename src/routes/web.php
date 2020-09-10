@@ -12,4 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'JobController@index')->name('home');
+Route::get('/{id}', 'JobController@show')->name('show');
+Route::post('/apply', 'JobController@apply')->name('apply');
