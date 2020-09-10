@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
+use Session;
 
 class JobController extends Controller
 {
@@ -49,9 +50,11 @@ class JobController extends Controller
     {
         $path = $request->attachment->store('');
 
-        JobApplication::create(array_merge($request->all(), [
+        $application = JobApplication::create(array_merge($request->all(), [
             'attachment' => $path
         ]));
+
+        Session::flash('inertia.job_application', !!$application);
 
         return Redirect::route('show', [
             'id' => $request->job_position_id

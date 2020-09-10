@@ -9,15 +9,6 @@ Caso necessário altere os valores no .env e src/.env.
 ```
 docker-compose up -d
 ```
-
-### Sentry
-Cria migrations e o usuário administrador:
-```
-docker-compose exec sentry sentry upgrade
-```
-
-Porta padrão: 9080
-
 ### Aplicação
 Acessar o bash do container workspace:
 ```
@@ -34,3 +25,12 @@ npm run dev
 ```
 
 Porta padrão: 9090
+
+### Sentry (opcional)
+Cria migrations e o usuário administrador:
+```
+docker-compose exec sentry sentry upgrade
+```
+
+Porta padrão: 9080
+

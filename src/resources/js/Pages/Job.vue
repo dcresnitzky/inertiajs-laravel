@@ -30,7 +30,7 @@ export default {
     layout: Layout,
 
     props: {
-        job: Object,
+        job: Object
     },
 
     components: {

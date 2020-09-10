@@ -41,7 +41,10 @@ Sentry.init({
     logErrors: true
 });
 
-Vue.use(Toasted)
+Vue.use(Toasted, {
+    duration: 2000,
+    keepOnHover: true,
+})
 Vue.use(VueMeta)
 Vue.use(InertiaApp)
 

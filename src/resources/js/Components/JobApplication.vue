@@ -78,45 +78,46 @@ export default {
 
     methods: {
         send: async function () {
-            let formData = new FormData()
+            this.sending = true
 
+            await this.$inertia.post(this.route('apply'), this.createFormData(), {
+                preserveScroll: true
+            })
+
+            this.sending = false
+
+            this.$page.session.job_application ? this.success() : this.error()
+        },
+
+        reset: function () {
+            this.form.name = ''
+            this.form.phone = ''
+            this.form.email = ''
+            this.$refs.attachmentRef.value = null
+        },
+
+        handleFileUpload(){
+            this.form.attachment = this.$refs.attachmentRef.files[0]
+        },
+
+        success() {
+            this.$toasted.show('Você se candidatou, aguarde novidades!')
+            this.reset()
+        },
+
+        error() {
+            this.$toasted.show('Ops, ocorreu um erro ao tentar candidatar-se')
+        },
+
+        createFormData() {
+            let formData = new FormData()
             formData.append('name', this.form.name || '')
             formData.append('email', this.form.email || '')
             formData.append('phone', this.form.phone || '')
             formData.append('attachment', this.form.attachment || '')
             formData.append('job_position_id', this.form.job_position_id || '')
 
-            try {
-                this.sending = true;
-
-                await this.$inertia.post(this.route('apply'), formData, {
-                    replace: false,
-                    preserveState: true,
-                    preserveScroll: true,
-                    only: [],
-                    headers: {},
-                })
-
-                this.$toasted.show('Você se candidatou, aguarde novidades!')
-                this.reset()
-
-            } catch(error) {
-                console.log(error);
-                this.$toasted.show('Ops, ocorreu um erro ao tentar candidatar-se')
-            }
-            this.sending = false;
-        },
-
-        reset: function () {
-            this.$page.errors = '';
-            this.form.name = ''
-            this.form.phone = ''
-            this.form.email = ''
-            this.$refs.attachmentRef.value = null;
-        },
-
-        handleFileUpload(){
-            this.form.attachment = this.$refs.attachmentRef.files[0];
+            return formData;
         }
     }
 }
